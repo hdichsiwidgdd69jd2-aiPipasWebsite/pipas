@@ -1,58 +1,191 @@
-Enter file contents here<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pipas Anime - بيپاس أنمي</title>
     <style>
-        body {
-            background-color: #0f172a;
-            color: #f8fafc;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding: 20px;
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --primary: #38bdf8;
+            --primary-hover: #0284c7;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
         }
-        .container {
-            max-width: 600px;
-            margin: 40px auto;
-            background-color: #1e293b;
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: var(--card-bg);
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
         }
         h1 {
-            color: #38bdf8;
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+            color: var(--primary);
+            margin: 0 0 15px 0;
+            font-size: 2rem;
         }
-        p {
-            color: #94a3b8;
-            font-size: 1.1rem;
-            line-height: 1.6;
+        .search-container {
+            margin-top: 10px;
         }
-        .btn {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 12px 24px;
-            background-color: #0284c7;
+        #searchInput {
+            width: 80%;
+            max-width: 400px;
+            padding: 12px 20px;
+            border-radius: 25px;
+            border: 1px solid #475569;
+            background-color: #0f172a;
             color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: bold;
+            font-size: 1rem;
+            outline: none;
             transition: 0.3s;
         }
+        #searchInput:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 8px rgba(56, 189, 248, 0.3);
+        }
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(0,0,0,0.4);
+        }
+        .card-content {
+            padding: 20px;
+            text-align: right;
+        }
+        .card h3 {
+            margin: 0 0 10px 0;
+            color: var(--primary);
+        }
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin: 0 0 15px 0;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 10px 0;
+            background-color: var(--primary-hover);
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 0 0 12px 12px;
+            font-weight: bold;
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
+        }
         .btn:hover {
-            background-color: #0369a1;
+            background-color: var(--primary);
+            color: #0f172a;
+        }
+        .no-results {
+            text-align: center;
+            color: var(--text-muted);
+            grid-column: 1 / -1;
+            padding: 40px;
+            font-size: 1.2rem;
+            display: none;
         }
     </style>
 </head>
 <body>
+
+    <header>
+        <h1>Pipas Anime ✨</h1>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="ابحث عن أنمي المفضل لديك..." onkeyup="searchAnime()">
+        </div>
+    </header>
+
     <div class="container">
-        <h1>مرحباً بكم في Pipas! ✨</h1>
-        <p>موقعكم المفضل لمتابعة واستكشاف عالم الأنمي الشيق.</p>
-        <p>الموقع قيد التطوير حالياً، وسيكون جاهزاً قريباً بأحدث الحلقات والأخبار!</p>
-        <a href="#" class="btn">قريباً...</a>
+        <div class="grid" id="animeGrid">
+            <div class="card" data-title="naruto ناتورو ناروتو">
+                <div class="card-content">
+                    <h3>ناروتو (Naruto)</h3>
+                    <p>قصة نينجا شاب يطمح للأنضمام لقرية الهوكاге وكسب احترام الجميع رحلة مليئة بالحماس.</p>
+                </div>
+                <a href="#" class="btn">مشاهدة الحلقات</a>
+            </div>
+
+            <div class="card" data-title="one piece وان بيس">
+                <div class="card-content">
+                    <h3>وان بيس (One Piece)</h3>
+                    <p>مغامرة شيقة للبحث عن الكنز الأسطوري ونصيحة ملك القراصنة المستقبل لوفي وفريقه.</p>
+                </div>
+                <a href="#" class="btn">مشاهدة الحلقات</a>
+            </div>
+
+            <div class="card" data-title="attack on titan هجوم العمالقة">
+                <div class="card-content">
+                    <h3>هجوم العمالقة (AOT)</h3>
+                    <p>صراع البشرية من أجل البقاء خلف الأسوار ضد عمالقة مرعبة تهدد وجودهم بالكامل.</p>
+                </div>
+                <a href="#" class="btn">مشاهدة الحلقات</a>
+            </div>
+
+            <div class="card" data-title="demon slayer قاتل الشياطين كيميتسو نو يايبا">
+                <div class="card-content">
+                    <h3>قاتل الشياطين (Demon Slayer)</h3>
+                    <p>فتى يبحث عن علاج لأخته التي تحولت لشيطان وينضم لفيلق صائدي الشياطين.</p>
+                </div>
+                <a href="#" class="btn">مشاهدة الحلقات</a>
+            </div>
+            
+            <div class="no-results" id="noResults">عذراً، لم يتم العثور على أي أنمي مطابقة لبحثك!</div>
+        </div>
     </div>
+
+    <script>
+        function searchAnime() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let cards = document.getElementsByClassName('card');
+            let noResults = document.getElementById('noResults');
+            let foundCount = 0;
+
+            for (let i = 0; i < cards.length; i++) {
+                let title = cards[i].getAttribute('data-title').toLowerCase();
+                if (title.includes(input)) {
+                    cards[i].style.display = "flex";
+                    foundCount++;
+                } else {
+                    cards[i].style.display = "none";
+                }
+            }
+
+            if (foundCount === 0) {
+                noResults.style.display = "block";
+            } else {
+                noResults.style.display = "none";
+            }
+        }
+    </script>
 </body>
 </html>
